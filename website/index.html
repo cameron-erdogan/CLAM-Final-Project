@@ -13,25 +13,29 @@
     </head>
     
     <body>
-        
-        <div id="map_app" ng-app='maptesting'>
-            <div id= "map_controller" ng-controller="MapCtrl">
-                <div id="map_canvas" ui-map="myMap"
-                ui-options="mapOptions" 
-                ui-event="{'map-idle' : 'onMapIdle()'}"
-                >
-                </div>
-                <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
-                          ui-event="{'map-click': 'markerClicked(marker)'}">
-                </div>
+        <div id= "map_controller" ng-controller="MapCtrl" ng-show="{{false}}">
+            <div id="map_canvas" ui-map="myMap"
+            ui-options="mapOptions" 
+            ui-event="{'map-idle' : 'onMapIdle()'}"
+            >
+            </div>
+            <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
+                      ui-event="{'map-click': 'markerClicked(marker)'}">
             </div>
         </div>
-          <div ng-controller="MyCtrl" id='ctl'>
-        <div id="search_results">
-            <h2>Data from callback</h2>
-            <p ng-repeat="venue in venues">{{venue.name}}</p>
-        </div>
+
+        <div ng-controller="MyCtrl" id='ctl'>
+            <div id="search_results">
+                <input type="text" ng-model="searchArea" placeholder = "Search ...">
+                <button ng-click='searchFoursquare(searchArea)'>Search Foursquare</button>
+                <p ng-repeat="venue in venues">{{venue.name}}</p>
+            </div>
+
+            <button ng-click='writeVal()'>Write to Filesystem</button>
+            <button ng-click='readVal()'>Read from Filesystem</button>
         
+            <div ng-repeat="message in messages">{{message}}</div>
+        </div>
 
         <!-- JQuery -->
         <script type="text/javascript" src="js/vendor/jquery-1.10.1.min.js"></script>
@@ -47,6 +51,7 @@
         <script type='text/javascript' src="js/app.js"></script>
         <script type='text/javascript' src="js/controllers.js"></script>
         <script type='text/javascript' src="js/services.js"></script>
+        <script type='text/javascript' src="js/filesystemService.js"></script>
     </body>
 
 </html>

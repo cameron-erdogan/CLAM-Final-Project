@@ -22,9 +22,35 @@ app.controller('MapCtrl', function ($scope) {
     };
 });
 
-app.controller('MyCtrl', function($scope, FoursquareService) {
-    FoursquareService.get({ll:"40.78,-73.97"},function(reply){
+app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) {
+
+    var txtFileName = "data.txt";
+    $scope.messages = ['Click a button'];
+
+    //40.78,-73.97 -> New York
+
+    $scope.searchFoursquare = function (searchItem){ 
+        FoursquareService.get({ll:searchItem},function(reply){
         $scope.venues = reply.response.venues;
         //console.log(reply);
-    });
+    });};
+
+
+    $scope.writeVal = function() {
+        FileSystemService.writeText(txtFileName, "Persistence TEST!!").then(function(fs) {
+            $scope.messages.push("data written");
+        }, function(err) {
+            console.log(err);
+            $window.alert(err.text);
+        });
+    };
+    
+    $scope.readVal = function() {
+        FileSystemService.readFile(txtFileName).then(function(contents) {
+            $scope.messages.push(contents);
+        }, function(err) {
+            console.log(err);
+            $window.alert(err.text);
+        });
+    };
 });
