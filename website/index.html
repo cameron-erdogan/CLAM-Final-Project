@@ -27,12 +27,13 @@
         <script type='text/javascript' src="js/app.js"></script>
         <script type='text/javascript' src="js/controllers.js"></script>
         <script type='text/javascript' src="js/services.js"></script>
-        <script type='text/javascript' src="js/store.js"></script>
+        <script type='text/javascript' src="js/filesystemService.js"></script>
     </head>
     
     <body>
-        <div id= "map_controller" ng-controller="MyCtrl">
-            <div id="map_canvas" ui-map="myMap"
+        <div ng-controller="MapCtrl" id= "map_controller" >
+            <div id="map_canvas" 
+            ui-map="myMap"
             ui-options="mapOptions" 
             ui-event="{'map-idle' : 'onMapIdle()'}"
             >
@@ -40,12 +41,19 @@
             <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
                       ui-event="{'map-click': 'markerClicked(marker)'}">
             </div>
+        </div>
 
+        <div ng-controller="MyCtrl" id="ctl">
             <div id="search_results">
-                <input type="text" ng-model="searchArea" placeholder = "Search ...">
-                <button ng-click='searchFoursquare(searchArea)'>Search Foursquare</button>
+                <input type="text" ng-model="searchArea" placeholder = "Search...">
+                <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
                 <p ng-repeat="venue in venues">{{venue.name}}</p>
+                <div class="well">
+                    <p>Venue example</p>
+                </div>
             </div>
         </div>
+
     </body>
+
 </html>
