@@ -28,6 +28,7 @@
         <script type='text/javascript' src="js/controllers.js"></script>
         <script type='text/javascript' src="js/services.js"></script>
         <script type='text/javascript' src="js/filesystemService.js"></script>
+        <script type='text/javascript' src="js/store.js"></script>
     </head>
     
     <body>
@@ -52,6 +53,11 @@
                     <p>Venue example</p>
                 </div>
             </div>
+
+            <button ng-click='writeVal()'>Write to Filesystem</button>
+            <button ng-click='readVal()'>Read from Filesystem</button>
+        
+            <div ng-repeat="message in messages">{{message}}</div>
         </div>
 
     </body>
