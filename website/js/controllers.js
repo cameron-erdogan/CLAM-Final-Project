@@ -5,6 +5,7 @@ app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) 
   $scope.mapOptions = {
       center: ll,
       zoom: 15,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
   };
 
