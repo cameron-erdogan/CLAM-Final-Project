@@ -1,29 +1,38 @@
-app.controller('MapCtrl', function ($scope) {
+app.controller('MyCtrl', function($scope, FoursquareService) {
+    //40.78,-73.97 -> New York
     var ll = new google.maps.LatLng(40.78,-73.97);
+    //$scope.myMarkers = [];
     $scope.mapOptions = {
-        center: ll,
-        disableDefaultUI: true,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+    center: ll,
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
     //Markers should be added after map is loaded
     $scope.onMapIdle = function() {
-        if ($scope.myMarkers === undefined){    
+        if ($scope.myMarkers === undefined){
             var marker = new google.maps.Marker({
-                map: $scope.myMap,
-                position: ll
-            });
-            $scope.myMarkers = [marker, ];
+            map: $scope.myMap,
+            position: ll
+        });
+        $scope.myMarkers = [marker, ];
         }
     };
 
     $scope.markerClicked = function(m) {
         window.alert("clicked");
+        var marker = new google.maps.Marker({
+            map: $scope.myMap,
+            position: new google.maps.LatLng(40.78,-73.98)
+        });
+        $scope.myMarkers.push(marker);
     };
-});
 
-app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) {
+    $scope.searchFoursquare = function (searchItem){ 
+        FoursquareService.get({ll:searchItem},function(reply){
+        $scope.venues = reply.response.venues;
+        //console.log(reply);
+    });};
 
     var txtFileName = "data.txt";
     $scope.messages = ['Click a button'];
@@ -47,4 +56,5 @@ app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) 
     $scope.readVal =    function() {
                             console.log( store.get( "whatever" ) );
                         };
+
 });
