@@ -32,7 +32,8 @@
     </head>
     
     <body>
-        <div ng-controller="MapCtrl" id= "map_controller" >
+    <div ng-controller="MyCtrl">
+        <div id= "map_controller" >
             <div id="map_canvas" 
             ui-map="myMap"
             ui-options="mapOptions" 
@@ -44,7 +45,7 @@
             </div>
         </div>
 
-        <div ng-controller="MyCtrl" id="ctl">
+        <div id="ctl">
             <div id="search_results">
                 <input type="text" ng-model="searchArea" placeholder = "Search...">
                 <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
@@ -59,7 +60,7 @@
         
             <div ng-repeat="message in messages">{{message}}</div>
         </div>
-
+    </div>
     </body>
 
 </html>
