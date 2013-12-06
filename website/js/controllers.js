@@ -2,6 +2,7 @@ app.controller('MapCtrl', function ($scope) {
     var ll = new google.maps.LatLng(40.78,-73.97);
     $scope.mapOptions = {
         center: ll,
+        disableDefaultUI: true,
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -32,7 +33,7 @@ app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) 
     $scope.searchFoursquare = function (searchItem){ 
         FoursquareService.get({ll:searchItem},function(reply){
         $scope.venues = reply.response.venues;
-        //console.log(reply);
+        console.log(reply);
     });};
 
 
