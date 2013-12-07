@@ -24,6 +24,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   $scope.itineraryVenues = [];
   $scope.showItinerary = function(itinerary){
     //Clear previous markers
+    //TODO: check if they are itinerary markers or search markers
     for (var i = 0; i < $scope.myMarkers.length; i++){
       var marker = $scope.myMarkers[i];
       marker.setMap(null);
@@ -73,6 +74,10 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   $scope.addItinerary = function(){
     window.alert("You clicked add itinerary");
+  };
+
+  $scope.removeItinerary = function(itinerary){
+    window.alert("You clicked remove itinerary " + itinerary.name);
   };
 
   /* Foursquare Search */

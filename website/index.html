@@ -39,7 +39,10 @@
             <!-- Section displays itineraries -->
             <div class = "itineraries row-fluid">
                 <div class = "itinerary span1" ng-repeat="itinerary in itineraries">
-                    <button ng-click = "showItinerary(itinerary)"><p>{{itinerary.name}}</p></button>
+                    <div ng-click = "showItinerary(itinerary)">
+                        {{itinerary.name}}
+                        <i ng-click = "removeItinerary(itinerary)" class="icon-remove"></i>
+                    </div>
                 </div>
             </div>
             <!-- Section displays venues inside selected itinerary -->
@@ -52,7 +55,7 @@
             <!-- Search area, Left -->
             <div class = "row span4">
                 <!-- Section to display search results for venues -->
-                <div class="search_results row col-md-4">
+                <div class="search_results row col-md-3">
                     <input type="text" ng-model="searchArea" placeholder = "Search...">
                     <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
                     <p ng-repeat="venue in venues">{{venue.name}}</p>
