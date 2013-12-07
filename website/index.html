@@ -1,66 +1,86 @@
 <!DOCTYPE html>
 <html ng-app="app">
-    
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Map App</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/main.css">
-        <!-- Modernizr -->
+        <!-- Modernizr 
+        Not sure we need modernizr...
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+        -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/custom.css">
         <!-- JQuery -->
         <script type="text/javascript" src="js/vendor/jquery-1.10.1.min.js"></script>
         <!-- Google Maps -->
         <script type='text/javascript' src="js/vendor/maps.js"></script>
         <!-- Bootstrap -->
-        <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
-        <!-- Angular -->
+        <script type='text/javascript' src="js/vendor/bootstrap.min.js"></script>
+        <!-- Vendor -->
         <script type='text/javascript' src="js/vendor/angular.min.js"></script>
         <script type='text/javascript' src="js/vendor/ui-map.min.js"></script>
         <script type='text/javascript' src="js/vendor/event.js"></script>
         <script type='text/javascript' src="js/vendor/angular-resource.js"></script>
-        <script type='text/javascript' src="js/vendor/ui-bootstrap-0.7.0.min.js"></script>
+        <script type='text/javascript' src="js/vendor/ui-bootstrap-tpls-0.7.0.min.js"></script>
         <!-- App specific -->
         <script type='text/javascript' src="js/app.js"></script>
         <script type='text/javascript' src="js/controllers.js"></script>
         <script type='text/javascript' src="js/services.js"></script>
-        <script type='text/javascript' src="js/filesystemService.js"></script>
+        <!-- Persistance -->
         <script type='text/javascript' src="js/store.js"></script>
     </head>
-    
-    <body>
-    <div ng-controller="MyCtrl">
-        <div id= "map_controller" >
-            <div id="map_canvas" 
-            ui-map="myMap"
-            ui-options="mapOptions" 
-            ui-event="{'map-idle' : 'onMapIdle()'}"
-            >
-            </div>
-            <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
-                      ui-event="{'map-click': 'markerClicked(marker)'}">
-            </div>
-        </div>
 
-        <div id="ctl">
-            <div id="search_results">
-                <input type="text" ng-model="searchArea" placeholder = "Search...">
-                <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
-                <p ng-repeat="venue in venues">{{venue.name}}</p>
-                <div class="well">
-                    <p>Venue example</p>
+    <body>
+        <div class="wrapper" ng-controller="MyCtrl">
+            <!-- Section displays itineraries -->
+            <div class = "itineraries row-fluid">
+                <div class = "itinerary span1" ng-repeat="itinerary in itineraries">
+                    <button ng-click = "showItinerary(itinerary)"><p>{{itinerary.name}}</p></button>
+                </div>
+            </div>
+            <!-- Section displays venues inside selected itinerary -->
+            <div class = "itineraryVenues row-fluid">
+                <div class = "itineraryVenue span1" ng-repeat="venue in itineraryVenues">
+                    {{venue.name}}
                 </div>
             </div>
 
-            <button ng-click='writeVal()'>Write to Filesystem</button>
-            <button ng-click='readVal()'>Read from Filesystem</button>
-        
-            <div ng-repeat="message in messages">{{message}}</div>
-        </div>
-    </div>
-    </body>
+            <!-- Search area, Left -->
+            <div class = "row span4">
+                <!-- Section to display search results for venues -->
+                <div class="search_results row col-md-4">
+                    <input type="text" ng-model="searchArea" placeholder = "Search...">
+                    <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
+                    <p ng-repeat="venue in venues">{{venue.name}}</p>
+                    <div class="well">
+                        <p>Venue example</p>
+                    </div>
+                </div>
 
+                <!-- Only for testing purposes, buttons must leave -->
+                <div class = "fileSystemTest">
+                    <button ng-click='writeVal()'>Write to Filesystem</button>
+                    <button ng-click='readVal()'>Read from Filesystem</button>
+                    <div ng-repeat="message in messages">{{message}}</div>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div id= "map">
+                <div id="map_canvas" 
+                ui-map="myMap" 
+                ui-options="mapOptions" 
+                ui-event="{'map-idle' : 'onMapIdle()'}"
+                >
+                </div>
+                <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
+                          ui-event="{'map-click': 'markerClicked(marker)'}">
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

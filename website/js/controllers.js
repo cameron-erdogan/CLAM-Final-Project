@@ -1,9 +1,9 @@
-app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) {
-
-  var ll = new google.maps.LatLng(40.78,-73.97);
+app.controller('MyCtrl', function($scope, FoursquareService) {
+  /* Map Control */
+  var initialCenter = new google.maps.LatLng(40.78,-73.97);
   $scope.myMarkers = [];
   $scope.mapOptions = {
-      center: ll,
+      center: initialCenter,
       zoom: 15,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -11,44 +11,94 @@ app.controller('MyCtrl', function($scope, FoursquareService, FileSystemService) 
 
   //Markers should be added after map is loaded
   $scope.onMapIdle = function() {
-      if ($scope.myMarkers === undefined){
-          var marker = new google.maps.Marker({
-              map: $scope.myMap,
-              position: ll
-          });
-          $scope.myMarkers = [marker, ];
-      }
+      if($scope.itineraries == null)
+        $scope.initializeItineraries();
   };
 
   $scope.markerClicked = function(m) {
-      window.alert("clicked");
-          var marker = new google.maps.Marker({
-              map: $scope.myMap,
-              position: new google.maps.LatLng(40.78,-73.98)
-          });
-        $scope.myMarkers.push(marker);
+      window.alert("Marker clicked!");
   };
 
-    var txtFileName = "data.txt";
-    $scope.messages = ['Click a button'];
-    venues_list = "";
-    // 40.78,-73.97 -> New York
-    // 42.3581,71.0636 -> Boston
+  /* Itinerary Management */
+  $scope.currentItinerary = {name:"", venues: []}; //Blank itinerary initially loaded
+  $scope.itineraryVenues = [];
+  $scope.showItinerary = function(itinerary){
+    //Clear previous markers
+    for (var i = 0; i < $scope.myMarkers.length; i++){
+      var marker = $scope.myMarkers[i];
+      marker.setMap(null);
+    }
+    $scope.myMarkers = [];
 
-    $scope.searchFoursquare = function (searchItem){ 
-        FoursquareService.get({ll:searchItem},function(reply){
-        $scope.venues = reply.response.venues;
-        console.log(reply);
-        for(var i=0; i<reply.response.venues.length; i++){
-            venues_list += reply.response.venues[i].name+"\n";
-        }
-    });};
+    //Add markers from the new itinerary
+    for (var i = 0; i < itinerary.venues.length; i++){
+      var venue = itinerary.venues[i];
+      var marker = new google.maps.Marker({
+          map: $scope.myMap,
+          position: new google.maps.LatLng(venue.lat,venue.lng)
+      });
+      $scope.myMarkers.push(marker);
+    }
 
-    $scope.writeVal =   function() {
-                            store.set( "whatever",venues_list );
-                        };
+    //Update variables for display
+    $scope.currentItinerary = itinerary;
+    $scope.itineraryVenues = itinerary.venues;
+    window.alert("you selected " + itinerary.name);
+  };
 
-    $scope.readVal =    function() {
-                            console.log( store.get( "whatever" ) );
-                        };
+  //Testing purposes, two itineraries
+  //$scope.itineraries = [];
+  $scope.initializeItineraries = function(){
+    $scope.itineraries = [
+      { name:"Itinerary 1",
+        venues:[
+          {name:"Location 1", lat:"40.78", lng:"-73.98"},
+          {name:"Location 2", lat:"40.782", lng:"-73.982"}
+      ]},
+      { name:"Itinerary 2",
+        venues:[
+          {name:"Location 1", lat:"40.777", lng:"-73.977"},
+          {name:"Location 2", lat:"40.779", lng:"-73.979"}
+      ]},
+      { name:"Empty 1", venues:[]}
+      // { name:"Empty 2", venues:[]},
+      // { name:"Empty 3", venues:[]},
+      // { name:"Empty 4", venues:[]},
+      // { name:"Empty 5", venues:[]},
+      // { name:"Empty 6", venues:[]},
+      // { name:"Empty 7", venues:[]},
+      // { name:"Empty 8", venues:[]},
+    ];
+  };
+
+  $scope.addItinerary = function(){
+    window.alert("You clicked add itinerary");
+  };
+
+  /* Foursquare Search */
+  $scope.searchFoursquare = function (searchItem){
+      var center = $scope.myMap.getCenter();
+      var latlng = center.pb + "," + center.qb;
+      FoursquareService.get({ll:latlng, query:searchItem},function(reply){
+      $scope.venues = reply.response.venues;
+      console.log(reply);
+      for(var i=0; i<reply.response.venues.length; i++){
+          venues_list += reply.response.venues[i].name+"\n";
+      }
+  });};
+
+
+  /* Persistance */
+  var txtFileName = "data.txt";
+  $scope.messages = [];
+  venues_list = "";
+
+  $scope.writeVal =   function() {
+    $scope.itineraries[0].venues = $scope.venues;
+    store.set( "whatever",venues_list );
+  };
+
+  $scope.readVal =    function() {
+    console.log( store.get( "whatever" ) );
+  };
 });
