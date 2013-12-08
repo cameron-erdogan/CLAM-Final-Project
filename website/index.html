@@ -59,8 +59,8 @@
                 <!-- Section to display search results for venues -->
                 <div class="search_results row col-md-3">
                     <input type="text" ng-model="searchArea" 
-                    typeahead="venue.name for venue in searchFoursquare(searchArea) | limitTo:8"
-                    typeahead-min-length="3" placeholder = "Search near this area...">
+                    typeahead="venue.name for venue in searchFoursquare($viewValue)"
+                    placeholder = "Search near this area..."></input>
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                     <div class = "well well-sm" ng-repeat="venue in venues">
                         {{venue.name}}
