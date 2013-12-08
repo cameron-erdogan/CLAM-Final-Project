@@ -39,6 +39,8 @@
         <div class="wrapper" ng-controller="MyCtrl">
             <!-- Section displays itineraries -->
             <div class = "itineraries row-fluid">
+                <div id="add-itinerary" class="itinerary span1" style="cursor: pointer" ng-click="addItinerary()">Add new itinerary <i class = "icon-plus"></i></div>
+
                 <div class = "itinerary span1" ng-repeat="itinerary in itineraries">
                     <div style="cursor: pointer" ng-click = "showItinerary(itinerary)">
                        
@@ -52,7 +54,7 @@
                         
                     </div>
                 </div>
-                <div id="add-itinerary" class="itinerary span1" style="cursor: pointer" ng-click="addItinerary()">Add new itinerary <i class = "icon-plus"></i></div>
+                
             </div>
             <!-- Section displays venues inside selected itinerary -->
             <div class = "itineraryVenues row-fluid">
