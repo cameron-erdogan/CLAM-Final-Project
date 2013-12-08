@@ -84,8 +84,12 @@
                 >
                 </div>
                 <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
-                          ui-event="{'map-click': 'markerClicked(marker)'}">
+                          ui-event="{'map-click': 'markerClicked(marker);myMap.panTo(marker.getPosition())'}">
                 </div>
+            </div>
+            <div ui-map-info-window="myInfoWindow">
+                <h1>Marker</h1>
+                Lat: <input ng-model="currentMarker.lat">, Lng: <input ng-model="currentMarker.lng">
             </div>
         </div>
     </body>

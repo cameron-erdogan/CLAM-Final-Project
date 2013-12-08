@@ -15,8 +15,10 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
         $scope.initializeItineraries();
   };
 
-  $scope.markerClicked = function(m) {
-      window.alert("Marker clicked!");
+  //TODO:Differentiate case when current marker is already added or not
+  $scope.markerClicked = function(marker) {
+      $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng()};
+      $scope.myInfoWindow.open($scope.myMap, marker);  
   };
 
   /* Itinerary Management */
@@ -46,7 +48,23 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     $scope.itineraryVenues = itinerary.venues;
   };
 
-  //Testing purposes, two itineraries
+  $scope.addItinerary = function(){
+    var newName = bootbox.prompt("Please enter itinerary name", function(newName){
+      if(newName){
+        var itin = {name:newName, venues:[]};
+        $scope.itineraries.push(itin);
+      }
+    });
+  };
+
+  $scope.removeItinerary = function(index){
+    bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
+      if(response)
+        $scope.itineraries.splice(index,1);
+    });
+  };
+
+  //Testing purposes, three itineraries
   //$scope.itineraries = [];
   $scope.initializeItineraries = function(){
     $scope.itineraries = [
@@ -69,21 +87,6 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       // { name:"Empty 7", venues:[]},
       // { name:"Empty 8", venues:[]},
     ];
-  };
-
-  $scope.addItinerary = function(){
-    var newName = bootbox.prompt("Please enter itinerary name", function(newName){
-      if(newName){
-        var itin = {name:newName, venues:[]};
-        $scope.itineraries.push(itin);
-      }
-    });}
-
-  $scope.removeItinerary = function(index){
-    bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
-      if(response)
-        $scope.itineraries.splice(index,1);
-    });
   };
 
   /* Foursquare Search */
