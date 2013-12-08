@@ -74,6 +74,7 @@
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                     <div class = "well well-sm" ng-repeat="venue in searchVenues">
                         {{venue.name}}
+                        <i ng-click = "showVenueInfo('search', $index)" class="icon-eye-open"></i>
                         <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i>
                     </div>
                 </div>
