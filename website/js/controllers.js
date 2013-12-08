@@ -87,15 +87,26 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   /* Foursquare Search */
   $scope.searchFoursquare = function (searchItem){
-      var center = $scope.myMap.getCenter();
-      var latlng = center.pb + "," + center.qb;
-      return FoursquareService.get({ll:latlng, query:searchItem},function(reply){
-        //TODO: show error if something does not work in response
-        $scope.searchVenues = reply.response.venues;
-        $scope.addSearchResultsToMap($scope.searchVenues);
-        $scope.showItinerary($scope.currentItinerary);
-        //console.log(reply.response.venues);
-        return $scope.searchVenues;
+    //Setup search params
+    var center = $scope.myMap.getCenter();
+    var latlng = center.pb + "," + center.qb;
+    var ne = $scope.myMap.getBounds().getNorthEast();
+    var sw = $scope.myMap.getBounds().getSouthWest();
+
+    //earths radius in miles == 3956.6
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(
+            ne, 
+            sw, 
+            6378.1
+      ) * 500;
+
+    return FoursquareService.get({ll:latlng, query:searchItem, radius:distance},function(reply){
+      //TODO: show error if something does not work in response
+      $scope.searchVenues = reply.response.venues;
+      $scope.addSearchResultsToMap($scope.searchVenues);
+      $scope.showItinerary($scope.currentItinerary);
+      //console.log(reply.response.venues);
+      return $scope.searchVenues;
   });};
 
   $scope.addSearchResultsToMap = function(venues){
