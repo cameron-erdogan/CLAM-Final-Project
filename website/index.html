@@ -73,7 +73,9 @@
                     placeholder = "Search near this area..."></input>
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                     <div class = "well well-sm" ng-repeat="venue in searchVenues">
-                        {{venue.name}} <br> {{venue.location.address}} <br> {{venue.location.crossStreet}}
+                        <p>{{venue.name}}</p>
+                        <p>{{venue.location.address}}</p> 
+                        <p>{{venue.location.crossStreet}}<p>
                         <i class="icon-eye-open" ng-click = "showVenueInfo('search', $index)"></i>
                         <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i>
                     </div>
