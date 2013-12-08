@@ -27,6 +27,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   //TODO:Differentiate case when current marker is already added or not
   $scope.markerClicked = function(marker) {
       $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng()};
+      $scope.currentVenue = $scope.findVenueFromMarker(marker);
+      console.log($scope.currentVenue);
       $scope.myInfoWindow.open($scope.myMap, marker);  
   };
 
@@ -68,6 +70,18 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       ]},
       { name:"Empty 1", venues:[]}
     ];
+  };
+
+  $scope.findVenueFromMarker = function(marker){
+    for (var i = 0; i < $scope.myMarkers.length; i++){
+      var temp = $scope.myMarkers[i];
+      if(temp == marker){
+        if(marker.get("markerType") == "search")
+          return $scope.searchVenues[marker.get("venueIndex")];
+        if(marker.get("markerType") == "itinerary")
+          return $scope.currentItinerary.venues[marker.get("venueIndex")];
+      }
+    }
   };
 
   $scope.addVenueToCurrentItinerary = function(index){
