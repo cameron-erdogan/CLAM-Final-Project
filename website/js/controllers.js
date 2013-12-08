@@ -84,14 +84,15 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   $scope.searchFoursquare = function (searchItem){
       var center = $scope.myMap.getCenter();
       var latlng = center.pb + "," + center.qb;
-      FoursquareService.get({ll:latlng, query:searchItem},function(reply){
-      $scope.venues = reply.response.venues;
-      console.log(reply);
-      for(var i=0; i<reply.response.venues.length; i++){
-          venues_list += reply.response.venues[i].name+"\n";
-      }
+      return FoursquareService.get({ll:latlng, query:searchItem},function(reply){
+        $scope.venues = reply.response.venues;
+        //console.log(reply);
+        for(var i=0; i<reply.response.venues.length; i++){
+            venues_list += reply.response.venues[i].name+"\n";
+        }
+        //console.log(reply.response.venues);
+        return reply.response.venues;
   });};
-
 
   /* Persistance */
   var txtFileName = "data.txt";

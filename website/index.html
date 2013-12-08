@@ -56,12 +56,11 @@
             <div class = "row span4">
                 <!-- Section to display search results for venues -->
                 <div class="search_results row col-md-3">
-                    <input type="text" ng-model="searchArea" placeholder = "Search...">
-                    <button class='btn' ng-click='searchFoursquare(searchArea)'>Search</button>
-                    <p ng-repeat="venue in venues">{{venue.name}}</p>
-                    <div class="well">
-                        <p>Venue example</p>
-                    </div>
+                    <input type="text" ng-model="searchArea" 
+                    typeahead="venue.name for venue in searchFoursquare(searchArea) | limitTo:8"
+                    typeahead-min-length="3" placeholder = "Search near this area...">
+                    <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
+                    <div class = "well" ng-repeat="venue in venues"><p>{{venue.name}}</p></div>
                 </div>
 
                 <!-- Only for testing purposes, buttons must leave -->
