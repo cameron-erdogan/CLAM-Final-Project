@@ -18,6 +18,7 @@
         <script type="text/javascript" src="js/vendor/jquery-1.10.1.min.js"></script>
         <!-- Google Maps -->
         <script type='text/javascript' src="js/vendor/maps.js"></script>
+        <script type='text/javascript' src="js/vendor/bootbox.min.js"></script>
         <!-- Bootstrap -->
         <script type='text/javascript' src="js/vendor/bootstrap.min.js"></script>
         <!-- Vendor -->
@@ -41,7 +42,7 @@
                 <div class = "itinerary span1" ng-repeat="itinerary in itineraries">
                     <div ng-click = "showItinerary(itinerary)">
                         {{itinerary.name}}
-                        <i ng-click = "removeItinerary(itinerary)" class="icon-remove"></i>
+                        <i ng-click = "removeItinerary($index)" class="icon-remove"></i>
                     </div>
                 </div>
                 <div ng-click="addItinerary()">Add new itinerary<i class = "icon-plus"></i></div>
@@ -61,7 +62,9 @@
                     typeahead="venue.name for venue in searchFoursquare(searchArea) | limitTo:8"
                     typeahead-min-length="3" placeholder = "Search near this area...">
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
-                    <div class = "well well-sm" ng-repeat="venue in venues"><p>{{venue.name}}</p></div>
+                    <div class = "well well-sm" ng-repeat="venue in venues">
+                        {{venue.name}}
+                    </div>
                 </div>
 
                 <!-- Only for testing purposes, buttons must leave -->

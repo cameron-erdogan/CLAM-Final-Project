@@ -44,7 +44,6 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     //Update variables for display
     $scope.currentItinerary = itinerary;
     $scope.itineraryVenues = itinerary.venues;
-    window.alert("you selected " + itinerary.name);
   };
 
   //Testing purposes, two itineraries
@@ -73,11 +72,18 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   };
 
   $scope.addItinerary = function(){
-    window.alert("You clicked add itinerary");
-  };
+    var newName = bootbox.prompt("Please enter itinerary name", function(newName){
+      if(newName){
+        var itin = {name:newName, venues:[]};
+        $scope.itineraries.push(itin);
+      }
+    });}
 
-  $scope.removeItinerary = function(itinerary){
-    window.alert("You clicked remove itinerary " + itinerary.name);
+  $scope.removeItinerary = function(index){
+    bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
+      if(response)
+        $scope.itineraries.splice(index,1);
+    });
   };
 
   /* Foursquare Search */
@@ -91,7 +97,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
             venues_list += reply.response.venues[i].name+"\n";
         }
         //console.log(reply.response.venues);
-        return reply.response.venues;
+        return $scope.venues;
   });};
 
   /* Persistance */
