@@ -23,7 +23,6 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   /* Itinerary Management */
   $scope.currentItinerary = {name:"", venues: []}; //Blank itinerary initially loaded
-  $scope.itineraryVenues = [];
   $scope.showItinerary = function(itinerary){
     //Clear previous markers
     //TODO: check if they are itinerary markers or search markers
@@ -70,13 +69,13 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     $scope.itineraries = [
       { name:"Itinerary 1",
         venues:[
-          {name:"Location 1", lat:"40.78", lng:"-73.98"},
-          {name:"Location 2", lat:"40.782", lng:"-73.982"}
+          {name:"Venue 1 - 1", lat:"40.78", lng:"-73.98"},
+          {name:"Venue 1 - 2", lat:"40.782", lng:"-73.982"}
       ]},
       { name:"Itinerary 2",
         venues:[
-          {name:"Location 1", lat:"40.777", lng:"-73.977"},
-          {name:"Location 2", lat:"40.779", lng:"-73.979"}
+          {name:"Venue 2 - 1", lat:"40.777", lng:"-73.977"},
+          {name:"Venue 2 - 2", lat:"40.779", lng:"-73.979"}
       ]},
       { name:"Empty 1", venues:[]}
       // { name:"Empty 2", venues:[]},
@@ -105,7 +104,6 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   /* Persistance */
   var txtFileName = "data.txt";
-  $scope.messages = [];
   venues_list = "";
 
   $scope.writeVal =   function() {
