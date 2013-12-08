@@ -44,6 +44,7 @@
                         <i ng-click = "removeItinerary(itinerary)" class="icon-remove"></i>
                     </div>
                 </div>
+                <div ng-click="addItinerary()">Add new itinerary<i class = "icon-plus"></i></div>
             </div>
             <!-- Section displays venues inside selected itinerary -->
             <div class = "itineraryVenues row-fluid">
@@ -60,7 +61,7 @@
                     typeahead="venue.name for venue in searchFoursquare(searchArea) | limitTo:8"
                     typeahead-min-length="3" placeholder = "Search near this area...">
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
-                    <div class = "well" ng-repeat="venue in venues"><p>{{venue.name}}</p></div>
+                    <div class = "well well-sm" ng-repeat="venue in venues"><p>{{venue.name}}</p></div>
                 </div>
 
                 <!-- Only for testing purposes, buttons must leave -->
