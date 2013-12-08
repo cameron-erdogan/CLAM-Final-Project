@@ -38,8 +38,9 @@
 }
 
 #add-itinerary {
-	left: 30px;
+	left: 4px;
 	top: 8px;
+	width: 130px;
 	position: relative;
 }
 
