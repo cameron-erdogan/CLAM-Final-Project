@@ -46,6 +46,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       var itin = {name:newName, venues:[]};
       $scope.itineraries.push(itin);
     }
+    //
+    store.set( "whatever",$scope.itineraries );
   };
 
   $scope.removeItinerary = function(index){
@@ -53,23 +55,16 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       if(response)
         $scope.itineraries.splice(index,1);
     });
+    //
+    store.set( "whatever",$scope.itineraries );
   };
 
   //Testing purposes, three itineraries
   $scope.initializeItineraries = function(){
-    $scope.itineraries = [
-      { name:"Itinerary 1",
-        venues:[
-          {name:"Venue 1 - 1", location: {lat:"40.78", lng:"-73.98"}},
-          {name:"Venue 1 - 2", location: {lat:"40.782", lng:"-73.982"}}
-      ]},
-      { name:"Itinerary 2",
-        venues:[
-          {name:"Venue 2 - 1", location: {lat:"40.777", lng:"-73.977"}},
-          {name:"Venue 2 - 2", location: {lat:"40.779", lng:"-73.979"}}
-      ]},
-      { name:"Empty 1", venues:[]}
-    ];
+    $scope.itineraries = [];
+    if( store.get( "whatever" ) ){
+      $scope.itineraries = store.get( "whatever" );
+    }
   };
 
   $scope.findVenueFromMarker = function(marker){
@@ -90,6 +85,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     $scope.searchVenues.splice(index, 1);
     $scope.addSearchResultsToMap($scope.searchVenues);
     $scope.showItinerary($scope.currentItinerary);
+    //
+    store.set( "whatever",$scope.itineraries );
   }
 
   $scope.removeVenueFromItinerary = function(index){
@@ -97,6 +94,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     $scope.currentItinerary.venues.splice(index, 1);
     $scope.addSearchResultsToMap($scope.searchVenues)
     $scope.showItinerary($scope.currentItinerary);
+    //
+    store.set( "whatever",$scope.itineraries );
   }
 
   /* Foursquare Search */
@@ -188,16 +187,4 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     }
   };
 
-  /* Persistance */
-  var txtFileName = "data.txt";
-  venues_list = "";
-
-  $scope.writeVal =   function() {
-    $scope.itineraries[0].venues = $scope.venues;
-    store.set( "whatever",venues_list );
-  };
-
-  $scope.readVal =    function() {
-    console.log( store.get( "whatever" ) );
-  };
 });

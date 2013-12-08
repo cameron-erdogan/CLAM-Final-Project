@@ -73,20 +73,11 @@
                     typeahead="venue.name for venue in searchFoursquare($viewValue)"
                     placeholder = "Search near this area..."></input>
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
-                    <div class = "well well-sm" ng-repeat="venue in searchVenues">
-                        <p>{{venue.name}}</p>
-                        <p>{{venue.location.address}}</p> 
-                        <p>{{venue.location.crossStreet}}</p>
-                        <p><a href="{{venue.url}}">{{venue.url}}</a></p>
-                        <i class="icon-eye-open" ng-click = "showVenueInfo('search', $index)"></i>
-                        <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i>
+                    <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
+                        <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
+                        <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
+                        <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
                     </div>
-                </div>
-
-                <!-- Only for testing purposes, buttons must leave -->
-                <div class = "fileSystemTest">
-                    <button ng-click='writeVal()'>Write to Filesystem</button>
-                    <button ng-click='readVal()'>Read from Filesystem</button>
                 </div>
             </div>
 
@@ -103,8 +94,18 @@
                 </div>
             </div>
             <div ui-map-info-window="myInfoWindow">
-                <h1>Marker</h1>
-                Lat: <input ng-model="currentMarker.lat">, Lng: <input ng-model="currentMarker.lng">
+                <h1>{{currentVenue.name}}</h1>
+                <p>
+                    {{currentVenue.categories[0].name}}
+                </p>
+                <p>
+                    {{currentVenue.location.address}} ({{currentVenue.location.crossStreet}}),
+                    <br/>{{currentVenue.location.city}}, {{currentVenue.location.state}} {{currentVenue.location.postalCode}}, {{currentVenue.location.country}}
+                    <br/>{{currentVenue.contact.formattedPhone}}
+                    <br/><a href="{{currentVenue.url}}" target="_blank">{{currentVenue.url}}</i></a>
+                    <br/><a href="http://twitter.com/{{currentVenue.twitter}}" target="_blank">@{{currentVenue.twitter}}</i></a>
+                    <br/>Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total.
+                </p>
             </div>
         </div>
     </body>
