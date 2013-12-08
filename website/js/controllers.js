@@ -1,7 +1,16 @@
 app.controller('MyCtrl', function($scope, FoursquareService) {
-  /* Map Control */
+  
   var initialCenter = new google.maps.LatLng(40.78,-73.97);
+  var redIcon = "http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png";
+  var blueIcon = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
+  //Stores all google map icons
   $scope.myMarkers = [];
+  //Stores search results
+  $scope.searchVenues = [];
+  //Selected itinerary
+  $scope.currentItinerary = {name:"", venues: []}; //Blank itinerary initially loaded
+  
+  /* Map Control */
   $scope.mapOptions = {
       center: initialCenter,
       zoom: 15,
@@ -22,29 +31,11 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   };
 
   /* Itinerary Management */
-  $scope.currentItinerary = {name:"", venues: []}; //Blank itinerary initially loaded
   $scope.showItinerary = function(itinerary){
-    //Clear previous markers
-    //TODO: check if they are itinerary markers or search markers
-    for (var i = 0; i < $scope.myMarkers.length; i++){
-      var marker = $scope.myMarkers[i];
-      marker.setMap(null);
-    }
-    $scope.myMarkers = [];
-
-    //Add markers from the new itinerary
-    for (var i = 0; i < itinerary.venues.length; i++){
-      var venue = itinerary.venues[i];
-      var marker = new google.maps.Marker({
-          map: $scope.myMap,
-          position: new google.maps.LatLng(venue.lat,venue.lng)
-      });
-      $scope.myMarkers.push(marker);
-    }
-
-    //Update variables for display
-    $scope.currentItinerary = itinerary;
+    $scope.clearMarkers("itinerary");
     $scope.itineraryVenues = itinerary.venues;
+    $scope.currentItinerary = itinerary;
+    $scope.addMarkers(redIcon, "itinerary");
   };
 
   $scope.addItinerary = function(){
@@ -64,27 +55,19 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   };
 
   //Testing purposes, three itineraries
-  //$scope.itineraries = [];
   $scope.initializeItineraries = function(){
     $scope.itineraries = [
       { name:"Itinerary 1",
         venues:[
-          {name:"Venue 1 - 1", lat:"40.78", lng:"-73.98"},
-          {name:"Venue 1 - 2", lat:"40.782", lng:"-73.982"}
+          {name:"Venue 1 - 1", location: {lat:"40.78", lng:"-73.98"}},
+          {name:"Venue 1 - 2", location: {lat:"40.782", lng:"-73.982"}}
       ]},
       { name:"Itinerary 2",
         venues:[
-          {name:"Venue 2 - 1", lat:"40.777", lng:"-73.977"},
-          {name:"Venue 2 - 2", lat:"40.779", lng:"-73.979"}
+          {name:"Venue 2 - 1", location: {lat:"40.777", lng:"-73.977"}},
+          {name:"Venue 2 - 2", location: {lat:"40.779", lng:"-73.979"}}
       ]},
       { name:"Empty 1", venues:[]}
-      // { name:"Empty 2", venues:[]},
-      // { name:"Empty 3", venues:[]},
-      // { name:"Empty 4", venues:[]},
-      // { name:"Empty 5", venues:[]},
-      // { name:"Empty 6", venues:[]},
-      // { name:"Empty 7", venues:[]},
-      // { name:"Empty 8", venues:[]},
     ];
   };
 
@@ -93,14 +76,51 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       var center = $scope.myMap.getCenter();
       var latlng = center.pb + "," + center.qb;
       return FoursquareService.get({ll:latlng, query:searchItem},function(reply){
-        $scope.venues = reply.response.venues;
-        //console.log(reply);
-        for(var i=0; i<reply.response.venues.length; i++){
-            venues_list += reply.response.venues[i].name+"\n";
-        }
+        //TODO: show error if something does not work in response
+        $scope.searchVenues = reply.response.venues;
+        $scope.addSearchResultsToMap($scope.venues);
         //console.log(reply.response.venues);
-        return $scope.venues;
+        return $scope.searchVenues;
   });};
+
+  $scope.addSearchResultsToMap = function(venues){
+    $scope.clearMarkers("search");
+    $scope.addMarkers(blueIcon, "search");
+  };
+
+  $scope.clearMarkers = function(markerType){
+    for (var i = 0; i < $scope.myMarkers.length; i++){
+      var marker = $scope.myMarkers[i];
+      if(marker.get("markerType") == markerType){
+        marker.setMap(null);
+        $scope.myMarkers.splice(i,1);
+        i--;
+      }
+    }
+  };
+
+  $scope.addMarkers = function(iconType, markType){
+    //Define what kind of markers we are adding
+    var list = [];
+    if(markType == "itinerary")
+      list = $scope.itineraryVenues;
+    else if (markType == "search")
+      list = $scope.searchVenues;
+    else //TODO: handle error
+      return;
+
+    //Add the markers
+    for (var i = 0; i < list.length; i++){
+      var venue = list[i];
+      var marker = new google.maps.Marker({
+          map: $scope.myMap,
+          icon:iconType,
+          position: new google.maps.LatLng(venue.location.lat,venue.location.lng)
+      });
+      marker.setValues({markerType:markType, venueIndex:i});
+      $scope.myMarkers.push(marker);
+    }
+  };
 
   /* Persistance */
   var txtFileName = "data.txt";
