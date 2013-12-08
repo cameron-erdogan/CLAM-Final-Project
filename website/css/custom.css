@@ -12,15 +12,37 @@
     height: 100%;
 }
 
-/*
-#search_results {
-
+.search_results {
+	left: 30px;
+	position: relative;
 }
 
-.itinerary{
+.itineraries {
+	width: 100%;
+	left: 30px;
+	position: relative;
+}
 
+.itineraryVenues {
+	width: 100%;
+	left: 30px;
+	position: relative;
+}
+
+#myTab {
+	width: 110px;
+}
+
+.marginBottom {
+	margin-bottom :1px !important;
+}
+
+#add-itinerary {
+	left: 30px;
+	top: 8px;
+	position: relative;
 }
 
 #fileSystemTest {
 
-}*/
+}

@@ -40,12 +40,19 @@
             <!-- Section displays itineraries -->
             <div class = "itineraries row-fluid">
                 <div class = "itinerary span1" ng-repeat="itinerary in itineraries">
-                    <div ng-click = "showItinerary(itinerary)">
-                        {{itinerary.name}}
-                        <i ng-click = "removeItinerary($index)" class="icon-remove"></i>
+                    <div style="cursor: pointer" ng-click = "showItinerary(itinerary)">
+                       
+
+
+						<ul class="nav nav-pills marginBottom" id="myTab">
+						    <li><a href="#">{{itinerary.name}} <i ng-click = "removeItinerary($index)" class="icon-remove"></i></a></li>
+						</ul>
+
+
+                        
                     </div>
                 </div>
-                <div ng-click="addItinerary()">Add new itinerary<i class = "icon-plus"></i></div>
+                <div id="add-itinerary" style="cursor: pointer" ng-click="addItinerary()">Add new itinerary <i class = "icon-plus"></i></div>
             </div>
             <!-- Section displays venues inside selected itinerary -->
             <div class = "itineraryVenues row-fluid">
