@@ -70,6 +70,19 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     ];
   };
 
+  $scope.addVenueToCurrentItinerary = function(index){
+    $scope.removeMarker("search",index);
+    $scope.currentItinerary.venues.push($scope.searchVenues[index]);
+    $scope.searchVenues.splice(index, 1);
+    $scope.showItinerary($scope.currentItinerary);
+  }
+
+  $scope.removeVenueFromItinerary = function(index){
+    $scope.removeMarker("itinerary", index);
+    $scope.currentItinerary.venues.splice(index, 1);
+    $scope.showItinerary($scope.currentItinerary);
+  }
+
   /* Foursquare Search */
   $scope.searchFoursquare = function (searchItem){
       var center = $scope.myMap.getCenter();
@@ -85,6 +98,20 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   $scope.addSearchResultsToMap = function(venues){
     $scope.clearMarkers("search");
     $scope.addMarkers(blueIcon, "search");
+    $scope.showItinerary($scope.currentItinerary);
+  };
+
+
+  $scope.removeMarker = function(mType, index){
+    for (var i = 0; i < $scope.myMarkers.length; i++){
+      var marker = $scope.myMarkers[i];
+      if(marker.get("markerType") == mType && marker.get("venueIndex") == index){
+        marker.setMap(null);
+        $scope.myMarkers.splice(i,1);
+        i--;
+        return;
+      }
+    }
   };
 
   $scope.clearMarkers = function(markerType){

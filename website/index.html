@@ -58,6 +58,7 @@
             <div class = "itineraryVenues row-fluid">
                 <div class = "itineraryVenue span1" ng-repeat="venue in itineraryVenues">
                     {{venue.name}}
+                    <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i>
                 </div>
             </div>
 
@@ -71,6 +72,7 @@
                     <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                     <div class = "well well-sm" ng-repeat="venue in searchVenues">
                         {{venue.name}}
+                        <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i>
                     </div>
                 </div>
 
