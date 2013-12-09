@@ -29,7 +29,7 @@
 	position: relative;
 }
 
-#myTab {
+.nav.nav-pills {
 	width: 110px;
 }
 
