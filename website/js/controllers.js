@@ -49,6 +49,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	$scope.addItinerary = function(){
 		bootbox.prompt("Please enter itinerary name",function(response){
 			if(response){
+				$scope.itineraries = store.get( "whatever" );
 				$scope.itineraries.push( {name:response, venues:[]} );
 				//save
 				store.set( "whatever",$scope.itineraries );
@@ -160,20 +161,20 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	});};
 
 	$scope.addSearchResultsToMap = function(venues){
-	$scope.clearMarkers("search");
-	$scope.addMarkers(redIcon, "search");
+		$scope.clearMarkers("search");
+		$scope.addMarkers(redIcon, "search");
 	};
 
 	$scope.showVenueInfo = function(venueType, index){
-	var marker = $scope.findMarker(venueType, index);
-	$scope.markerClicked(marker);
+		var marker = $scope.findMarker(venueType, index);
+		$scope.markerClicked(marker);
 	};
 
 	$scope.findMarker = function(mType,index){
 		for (var i = 0; i < $scope.myMarkers.length; i++){
-		var marker = $scope.myMarkers[i];
-		if(marker.get("markerType") == mType && marker.get("venueIndex") == index){
-		return marker;
+			var marker = $scope.myMarkers[i];
+			if(marker.get("markerType") == mType && marker.get("venueIndex") == index){
+			return marker;
 		}
 	}
 	};
@@ -182,10 +183,10 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	for (var i = 0; i < $scope.myMarkers.length; i++){
 		var marker = $scope.myMarkers[i];
 		if(marker.get("markerType") == mType && marker.get("venueIndex") == index){
-		marker.setMap(null);
-		$scope.myMarkers.splice(i,1);
-		i--;
-		return;
+			marker.setMap(null);
+			$scope.myMarkers.splice(i,1);
+			i--;
+			return;
 		}
 	}
 	};
@@ -194,9 +195,9 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	for (var i = 0; i < $scope.myMarkers.length; i++){
 		var marker = $scope.myMarkers[i];
 		if(marker.get("markerType") == markerType){
-		marker.setMap(null);
-		$scope.myMarkers.splice(i,1);
-		i--;
+			marker.setMap(null);
+			$scope.myMarkers.splice(i,1);
+			i--;
 		}
 	}
 	};
