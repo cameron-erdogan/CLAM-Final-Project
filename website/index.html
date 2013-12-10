@@ -42,19 +42,19 @@
 			<ul class="itineraries nav nav-pills marginBottom">
                 <li class="darkgray" ng-click="addItinerary()"><a href= "#"> Add new itinerary <i class = "icon-plus"></i></a></li>
 			    <li class="lightgray" ng-repeat="itinerary in itineraries" ng-class="{active: currentItinerary.name == itinerary.name}" ng-click = "showItinerary(itinerary)">
-                    <a href="#">{{itinerary.name}} <i ng-click = "removeItinerary($index)" class="icon-remove"></i></a>
+                    <a href="#">{{itinerary.name}} <i ng-click = "removeItinerary($index)" class="icon-remove cursor_delete"></i></a>
                 </li>
 			</ul>
             <!-- Section displays venues inside selected itinerary -->
             <ul class="itineraryVenues nav nav-pills darkorange marginBottom">
-                <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in currentItinerary.venues">
-                    <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
+                <li ng-show="currentItinerary.venues.length!=0&&itineraries.length!=0" ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in currentItinerary.venues">
+                    <a href="#">{{venue.name}} <i ng-click="removeVenueFromItinerary($index)" class="icon-remove cursor_delete"></i></a>
                 </li>
                 <li ng-show="itineraries.length==0">
-                    There are no itineries. Add itineraries above!
+                    <span style="background-color:rgba(255,255,0,.8)"><strong>There are no itineries. Add itineraries above!</strong></span>
                 </li>
-                <li ng-show="currentItinerary.venues.length==0" ng-hide="itineraries.length==0">
-                    There are no venues in this itinerary. Search for and add venues below!
+                <li ng-show="currentItinerary.venues.length==0&&itineraries.length!=0">
+                    <span style="background-color:rgba(255,255,0,.8)"><strong>There are no venues in this itinerary. Search for and add venues below!</strong></span>
                 </li>
             </ul>
 
@@ -66,8 +66,8 @@
                 placeholder = "Search near this area..."></input>
                 <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                 <div class = "well well-sm searchResults" ng-class="{highlightSelected:venue.added}" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
-                    <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
-                    <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
+                    <p>{{venue.name}} <i class = "icon-plus cursor_add" ng-click="addVenueToCurrentItinerary($index)"></i></p>
+                    <p>{{venue.location.address}}<span ng-show="venue.location.address&&venue.location.city">, </span>{{venue.location.city}}<span ng-show="venue.location.city&&venue.location.state">, </span>{{venue.location.state}} {{venue.location.postalCode}}</p> 
                     <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     <p ng-show="currentVenue.contact.formattedPhone">{{currentVenue.contact.formattedPhone}}<p>
                     <p ng-show="currentVenue.url"><a href="{{currentVenue.url}}" target="_blank">{{currentVenue.url}}</a></p>
                     <p ng-show="currentVenue.twitter"><a ng-show="currentVenue.twitter" href="http://twitter.com/{{currentVenue.twitter}}" target="_blank">@{{currentVenue.twitter}}</a></p>
-                    <p ng-show="currentVenue.hereNow.count > -1">Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
+                    <p ng-show="currentVenue.hereNow.count > -1"><a href="https://foursquare.com/" target="_blank"><strong>FourSquare</strong></a><strong> Stats:</strong> Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
                 </div>
                 <div class = "infoWindowControls">
                      <button class = "btn btn-primary" ng-show="currentMarker.markerType == 'search'">
