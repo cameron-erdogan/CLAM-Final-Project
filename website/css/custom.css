@@ -79,3 +79,8 @@
 .infoWindowControls{
 	padding-bottom:10px;
 }
+
+
+li a i.cursor_delete{
+	cursor:url(img/Cursor_Delete.png),crosshair;
+}
