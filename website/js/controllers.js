@@ -70,6 +70,9 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     }
     if( $scope.itineraries.length==0 ){
       var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name"); /////////////////disable "cancel"
+      if(reply == null || jQuery.trim(reply).length == 0) {
+        
+      }
       if (newName){
         var itin = {name:newName, venues:[]};
         $scope.itineraries.push(itin);
