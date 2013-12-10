@@ -47,7 +47,7 @@
 			</ul>
             <!-- Section displays venues inside selected itinerary -->
             <ul class="itineraryVenues nav nav-pills darkorange marginBottom">
-                <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in itineraryVenues">
+                <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in currentItinerary.venues">
                     <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
                 </li>
                 <li ng-show="currentItinerary.venues.length==0">

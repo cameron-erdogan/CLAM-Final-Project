@@ -24,8 +24,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	//Markers should be added after map is loaded
 	$scope.onMapIdle = function() {
 		if($scope.itineraries == null){
-		$scope.initializeItineraries();
-		$scope.currentMarker = null;
+			$scope.initializeItineraries();
+			$scope.currentMarker = null;
 		}
 	};
 
@@ -43,17 +43,17 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 		$scope.clearMarkers("itinerary");
 		$scope.itineraryVenues = itinerary.venues;
 		$scope.currentItinerary = itinerary;
-		$scope.addMarkers(blueIcon, "itinerary");
+		$scope.addMarkers(blueIcon,"itinerary");
 		$scope.currentVenue = null;
 	};
 
 	$scope.addItinerary = function(){
 	var newName = bootbox.prompt("Please enter itinerary name",function(response){
 		if(response){
-		var itin = {name:response, venues:[]};
-		$scope.itineraries.push(itin);
-		store.set( "whatever",$scope.itineraries );
-		$scope.$apply();
+			var itin = {name:response, venues:[]};
+			$scope.itineraries.push(itin);
+			store.set( "whatever",$scope.itineraries );
+			$scope.$apply();
 		}
 	});
 /////////////////////////////////////////////////////////////disable "ok" when nothing is entered; disable "cancel" if there are no itineraries
