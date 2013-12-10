@@ -37,7 +37,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     $scope.clearMarkers("itinerary");
     $scope.itineraryVenues = itinerary.venues;
     $scope.currentItinerary = itinerary;
-    $scope.addMarkers(redIcon, "itinerary");
+    $scope.addMarkers(blueIcon, "itinerary");
+    $scope.currentVenue = null;
   };
 
   $scope.addItinerary = function(){
@@ -63,6 +64,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   $scope.initializeItineraries = function(){
     $scope.itineraries = [];
     if( store.get( "whatever" ) ){
+      //store.remove("whatever");
       $scope.itineraries = store.get( "whatever" );
     }
   };
@@ -124,7 +126,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   $scope.addSearchResultsToMap = function(venues){
     $scope.clearMarkers("search");
-    $scope.addMarkers(blueIcon, "search");
+    $scope.addMarkers(redIcon, "search");
   };
 
   $scope.showVenueInfo = function(venueType, index){

@@ -13,24 +13,24 @@
 }
 
 .search_results {
-	left: 30px;
+	left: 2%;
 	position: relative;
 }
 
 .itineraries {
 	width: 100%;
-	left: 30px;
+	left: 2%;
 	position: relative;
 }
 
 .itineraryVenues {
 	width: 100%;
-	left: 30px;
+	left: 2%;
 	position: relative;
 }
 
 .nav.nav-pills {
-	width: 110px;
+	cursor: pointer;
 }
 
 .marginBottom {
@@ -44,11 +44,10 @@
 	position: relative;
 }
 
-#fileSystemTest {
-
+.darkorange .active a,
+.darkorange .active a:hover {
+    background-color: darkorange;
 }
-
-
 
 .searchResults{
 	padding:5px;
