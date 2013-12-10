@@ -41,42 +41,48 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 /* Itinerary Management */
 	$scope.showItinerary = function(itinerary){
 		$scope.clearMarkers("itinerary");
-		$scope.itineraryVenues = itinerary.venues;
 		$scope.currentItinerary = itinerary;
 		$scope.addMarkers(blueIcon,"itinerary");
 		$scope.currentVenue = null;
 	};
 
 	$scope.addItinerary = function(){
-	var newName = bootbox.prompt("Please enter itinerary name",function(response){
-		if(response){
-			var itin = {name:response, venues:[]};
-			$scope.itineraries.push(itin);
-			store.set( "whatever",$scope.itineraries );
+		bootbox.prompt("Please enter itinerary name",function(response){
+			if(response){
+				$scope.itineraries.push( {name:response, venues:[]} );
+				//save
+				store.set( "whatever",$scope.itineraries );
+				//update view
+				$scope.showItinerary( $scope.itineraries[$scope.itineraries.length-1] );
+			}
 			$scope.$apply();
-		}
-	});
+		});
 /////////////////////////////////////////////////////////////disable "ok" when nothing is entered; disable "cancel" if there are no itineraries
 	//
 	};
 
 	$scope.removeItinerary = function(index){
-	bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
-		if(response){
-		$scope.itineraries.splice(index,1);
+		bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
+			if(response){
+				$scope.itineraries.splice(index,1);
+				//save
+				store.set( "whatever",$scope.itineraries );
+				//update view
+				if( $scope.itineraries.length==0 ){
+
+				}
+				else if( index==0 ){
+					$scope.showItinerary($scope.itineraries[0]);
+				}
+				else{
+					$scope.showItinerary($scope.itineraries[index-1]);
+				}
+			}
+			/////////////////////////////////////////////////////////////////if the selected one has index index 
+			$scope.$apply();
+		});
+		//
 		store.set( "whatever",$scope.itineraries );
-		if( index==0 ){
-			$scope.showItinerary($scope.itineraries[0]);
-		}
-		else{
-			$scope.showItinerary($scope.itineraries[index-1]);
-		}
-		}
-		/////////////////////////////////////////////////////////////////if the selected one has index index 
-		$scope.$apply();
-	});
-	//
-	store.set( "whatever",$scope.itineraries );
 	};
 
 	//Testing purposes, three itineraries
@@ -89,15 +95,15 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.findVenueFromMarker = function(marker){
-	for (var i = 0; i < $scope.myMarkers.length; i++){
-		var temp = $scope.myMarkers[i];
-		if(temp == marker){
-		if(marker.get("markerType") == "search")
-			return $scope.searchVenues[marker.get("venueIndex")];
-		if(marker.get("markerType") == "itinerary")
-			return $scope.currentItinerary.venues[marker.get("venueIndex")];
+		for (var i = 0; i < $scope.myMarkers.length; i++){
+			var temp = $scope.myMarkers[i];
+			if(temp == marker){
+			if(marker.get("markerType") == "search")
+				return $scope.searchVenues[marker.get("venueIndex")];
+			if(marker.get("markerType") == "itinerary")
+				return $scope.currentItinerary.venues[marker.get("venueIndex")];
+			}
 		}
-	}
 	};
 
 	//Hacky shit due to ui-maps bug. Look at https://github.com/angular-ui/ui-map/issues/23
@@ -199,7 +205,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	//Define what kind of markers we are adding
 	var list = [];
 	if(markType == "itinerary")
-		list = $scope.itineraryVenues;
+		list = $scope.currentItinerary.venues;
 	else if (markType == "search")
 		list = $scope.searchVenues;
 	else //TODO: handle error

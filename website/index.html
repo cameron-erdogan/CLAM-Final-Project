@@ -50,7 +50,10 @@
                 <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in currentItinerary.venues">
                     <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
                 </li>
-                <li ng-show="currentItinerary.venues.length==0">
+                <li ng-show="itineraries.length==0">
+                    There are no itineries. Add itineraries above!
+                </li>
+                <li ng-show="currentItinerary.venues.length==0" ng-hide="itineraries.length==0">
                     There are no venues in this itinerary. Search for and add venues below!
                 </li>
             </ul>
