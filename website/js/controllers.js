@@ -30,8 +30,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.markerClicked = function(marker) {
-		// $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
-		//                         markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
+		$scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
+		                         markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
 		$scope.currentMarker = marker;
 		$scope.currentVenue = $scope.findVenueFromMarker(marker);
 		console.log(marker);
@@ -101,30 +101,28 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	//Hacky shit due to ui-maps bug. Look at https://github.com/angular-ui/ui-map/issues/23
-	$scope.prevIndex = -1;
 	$scope.addVenueToCurrentItinerary = function(index){
-	if ($scope.prevIndex != index){
-		$scope.currentItinerary.venues.push($scope.searchVenues[index]);
-		$scope.removeMarker("search",index);
-		$scope.searchVenues.splice(index, 1);
-		$scope.addSearchResultsToMap($scope.searchVenues);
-		$scope.showItinerary($scope.currentItinerary);
-		//
-		store.set( "whatever",$scope.itineraries );
-	}
-	$scope.prevIndex = index;
+  	if ($scope.prevIndex != index){
+  		$scope.currentItinerary.venues.push($scope.searchVenues[index]);
+  		$scope.removeMarker("search",index);
+  		$scope.searchVenues.splice(index, 1);
+  		$scope.addSearchResultsToMap($scope.searchVenues);
+  		$scope.showItinerary($scope.currentItinerary);
+  		//
+  		store.set( "whatever",$scope.itineraries );
+  	}
 
 	}
 
 	$scope.removeVenueFromItinerary = function(index){
-	return bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
-		if(response){
-		$scope.removeMarker("itinerary", index);
-		$scope.currentItinerary.venues.splice(index, 1);
-		$scope.addSearchResultsToMap($scope.searchVenues)
-		$scope.showItinerary($scope.currentItinerary);
-		store.set( "whatever",$scope.itineraries );     
-		} 
+  	return bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
+  		if(response){
+    		$scope.removeMarker("itinerary", index);
+    		$scope.currentItinerary.venues.splice(index, 1);
+    		$scope.addSearchResultsToMap($scope.searchVenues)
+    		$scope.showItinerary($scope.currentItinerary);
+    		store.set( "whatever",$scope.itineraries );     
+    	} 
 	});
 
 	//////////////////////////////////////////////////
