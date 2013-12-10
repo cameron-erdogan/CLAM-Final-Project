@@ -81,6 +81,9 @@
 }
 
 
-li a i.cursor_delete{
-	cursor:url(img/Cursor_Delete.png),crosshair;
+.cursor_delete{
+	cursor:url(../img/Cursor_Delete.png),crosshair;
+}
+.cursor_add{
+	cursor:url(../img/Cursor_Add.png),crosshair;
 }

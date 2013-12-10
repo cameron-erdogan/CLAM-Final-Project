@@ -42,7 +42,7 @@
 			<ul class="itineraries nav nav-pills marginBottom">
                 <li class="darkgray" ng-click="addItinerary()"><a href= "#"> Add new itinerary <i class = "icon-plus"></i></a></li>
 			    <li class="lightgray" ng-repeat="itinerary in itineraries" ng-class="{active: currentItinerary.name == itinerary.name}" ng-click = "showItinerary(itinerary)">
-                    <a href="#">{{itinerary.name}} <i ng-click = "removeItinerary($index)" class="icon-remove"></i></a>
+                    <a href="#">{{itinerary.name}} <i ng-click = "removeItinerary($index)" class="icon-remove cursor_delete"></i></a>
                 </li>
 			</ul>
             <!-- Section displays venues inside selected itinerary -->
@@ -66,8 +66,8 @@
                 placeholder = "Search near this area..."></input>
                 <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                 <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
-                    <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
-                    <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
+                    <p>{{venue.name}} <i class = "icon-plus cursor_add" ng-click="addVenueToCurrentItinerary($index)"></i></p>
+                    <p><span ng-show="currentVenue.location.address">{{venue.location.address}}</span ng-show="currentVenue.location.address&&currentVenue.location.city"><span>, </span>{{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
                     <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
                 </div>
             </div>
