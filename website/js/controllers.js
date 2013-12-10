@@ -126,10 +126,11 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   		if(response){
     		$scope.removeMarker("itinerary", index);
     		$scope.currentItinerary.venues.splice(index, 1);
-    		$scope.addSearchResultsToMap($scope.searchVenues)
-    		$scope.showItinerary($scope.currentItinerary);
     		//save
     		store.set( "whatever",$scope.itineraries );
+    		//update
+    		$scope.addSearchResultsToMap($scope.searchVenues);
+    		$scope.showItinerary($scope.currentItinerary);
     		$scope.$apply();
     	} 
 	});
