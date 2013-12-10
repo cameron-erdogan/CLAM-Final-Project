@@ -135,7 +135,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   $scope.searchFoursquare = function (searchItem){
     //Setup search params
     var center = $scope.myMap.getCenter();
-    var latlng = center.pb + "," + center.qb;
+    var latlng = center.lat() + "," + center.lng();
     var ne = $scope.myMap.getBounds().getNorthEast();
     var sw = $scope.myMap.getBounds().getSouthWest();
 
