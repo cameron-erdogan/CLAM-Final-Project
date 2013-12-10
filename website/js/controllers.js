@@ -128,7 +128,9 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     		$scope.currentItinerary.venues.splice(index, 1);
     		$scope.addSearchResultsToMap($scope.searchVenues)
     		$scope.showItinerary($scope.currentItinerary);
-    		store.set( "whatever",$scope.itineraries );     
+    		//save
+    		store.set( "whatever",$scope.itineraries );
+    		$scope.$apply();
     	} 
 	});
 

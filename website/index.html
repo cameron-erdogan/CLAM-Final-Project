@@ -51,10 +51,10 @@
                     <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
                 </li>
                 <li ng-show="itineraries.length==0">
-                    There are no itineries. Add itineraries above!
+                    <span style="background-color:rgba(255,255,0,.8)"><strong>There are no itineries. Add itineraries above!</strong></span>
                 </li>
-                <li ng-show="currentItinerary.venues.length==0" ng-hide="itineraries.length==0">
-                    There are no venues in this itinerary. Search for and add venues below!
+                <li ng-show="currentItinerary.venues.length==0&&itineraries.length!=0">
+                    <span style="background-color:rgba(255,255,0,.8)"><strong>There are no venues in this itinerary. Search for and add venues below!</strong></span>
                 </li>
             </ul>
 
