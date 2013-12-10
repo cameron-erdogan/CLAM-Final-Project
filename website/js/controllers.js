@@ -106,18 +106,17 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 		}
 	};
 
-	//Hacky shit due to ui-maps bug. Look at https://github.com/angular-ui/ui-map/issues/23
 	$scope.addVenueToCurrentItinerary = function(index){
-  	if ($scope.prevIndex != index){
   		$scope.currentItinerary.venues.push($scope.searchVenues[index]);
-  		$scope.removeMarker("search",index);
-  		$scope.searchVenues.splice(index, 1);
+  		//$scope.removeMarker("search",index);
+  		//$scope.searchVenues.splice(index, 1);
   		$scope.addSearchResultsToMap($scope.searchVenues);
   		$scope.showItinerary($scope.currentItinerary);
+      $scope.myInfoWindow.close();
+      $scope.currentVenue = $scope.searchVenues[index];
+      $scope.showVenueInfo('itinerary', $scope.currentItinerary.venues.length-1);
   		//
   		store.set( "whatever",$scope.itineraries );
-  	}
-
 	}
 
 	$scope.removeVenueFromItinerary = function(index){
@@ -165,8 +164,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.showVenueInfo = function(venueType, index){
-	var marker = $scope.findMarker(venueType, index);
-	$scope.markerClicked(marker);
+    var marker = $scope.findMarker(venueType, index);
+    $scope.markerClicked(marker);
 	};
 
 	$scope.findMarker = function(mType,index){
@@ -204,16 +203,27 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	$scope.addMarkers = function(iconType, markType){
 	//Define what kind of markers we are adding
 	var list = [];
+  var list2 = [];
 	if(markType == "itinerary")
 		list = $scope.currentItinerary.venues;
-	else if (markType == "search")
+	else if (markType == "search"){
 		list = $scope.searchVenues;
+    list2 = $scope.currentItinerary.venues;
+  }
 	else //TODO: handle error
 		return;
 
 	//Add the markers
 	for (var i = 0; i < list.length; i++){
 		var venue = list[i];
+    //Check if venue from search results is added to itineraries.
+    var alreadyAdded = venue.added;
+    for(var j = 0; j < list2.length && !alreadyAdded; j++){
+      var sVenue = list2[j];
+      if(sVenue.id == venue.id)
+        venue.added = true;
+    }
+
 		var marker = new google.maps.Marker({
 			map: $scope.myMap,
 			icon:iconType,

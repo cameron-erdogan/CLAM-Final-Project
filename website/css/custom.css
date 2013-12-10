@@ -79,3 +79,7 @@
 .infoWindowControls{
 	padding-bottom:10px;
 }
+
+.highlightSelected {
+	background-color: rgba(0,150,204,.8);
+}

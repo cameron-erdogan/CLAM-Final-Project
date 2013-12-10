@@ -65,7 +65,7 @@
                 typeahead="venue.name for venue in searchFoursquare($viewValue)"
                 placeholder = "Search near this area..."></input>
                 <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
-                <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
+                <div class = "well well-sm searchResults" ng-class="{highlightSelected:venue.added}" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
                     <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
                     <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
                     <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
