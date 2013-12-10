@@ -67,7 +67,7 @@
                 <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
                 <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
                     <p>{{venue.name}} <i class = "icon-plus cursor_add" ng-click="addVenueToCurrentItinerary($index)"></i></p>
-                    <p><span ng-show="currentVenue.location.address">{{venue.location.address}}</span ng-show="currentVenue.location.address&&currentVenue.location.city"><span>, </span>{{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
+                    <p>{{venue.location.address}}<span ng-show="venue.location.address&&venue.location.city">, </span>{{venue.location.city}}<span ng-show="venue.location.city&&venue.location.state">, </span>{{venue.location.state}} {{venue.location.postalCode}}</p> 
                     <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     <p ng-show="currentVenue.contact.formattedPhone">{{currentVenue.contact.formattedPhone}}<p>
                     <p ng-show="currentVenue.url"><a href="{{currentVenue.url}}" target="_blank">{{currentVenue.url}}</a></p>
                     <p ng-show="currentVenue.twitter"><a ng-show="currentVenue.twitter" href="http://twitter.com/{{currentVenue.twitter}}" target="_blank">@{{currentVenue.twitter}}</a></p>
-                    <p ng-show="currentVenue.hereNow.count > -1">Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
+                    <p ng-show="currentVenue.hereNow.count > -1"><a href="https://foursquare.com/" target="_blank"><strong>FourSquare</strong></a><strong> Stats:</strong> Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
                 </div>
                 <div class = "infoWindowControls">
                      <button class = "btn btn-primary" ng-show="currentMarker.markerType == 'search'">
