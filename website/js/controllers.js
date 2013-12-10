@@ -61,6 +61,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
       if(response){
         $scope.itineraries.splice(index,1);
+        store.set( "whatever",$scope.itineraries );
         if( index==0 ){
           $scope.showItinerary($scope.itineraries[0]);
         }
