@@ -63,7 +63,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.removeItinerary = function(index){
-		bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
+		bootbox.confirm("Are you sure you want to remove the itinerary" + $scope.itineraries[index].name, function(response){
 			if(response){
 				$scope.itineraries.splice(index,1);
 				//save
@@ -122,7 +122,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	}
 
 	$scope.removeVenueFromItinerary = function(index){
-  	return bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
+  	return bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+" from the itinerary "+$scope.currentItinerary.name+"?", function(response){
   		if(response){
     		$scope.removeMarker("itinerary", index);
     		$scope.currentItinerary.venues.splice(index, 1);
