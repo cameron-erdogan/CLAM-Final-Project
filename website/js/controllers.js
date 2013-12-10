@@ -43,7 +43,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   };
 
   $scope.addItinerary = function(){
-    var newName = window.prompt("Please enter itinerary name");
+    var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name");
     if (newName){
       var itin = {name:newName, venues:[]};
       $scope.itineraries.push(itin);
@@ -67,6 +67,15 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     if( store.get( "whatever" ) ){
       //store.remove("whatever");
       $scope.itineraries = store.get( "whatever" );
+    }
+    if( $scope.itineraries.length==0 ){
+      var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name"); /////////////////disable "cancel"
+      if (newName){
+        var itin = {name:newName, venues:[]};
+        $scope.itineraries.push(itin);
+      }
+      //
+      store.set( "whatever",$scope.itineraries );
     }
   };
 

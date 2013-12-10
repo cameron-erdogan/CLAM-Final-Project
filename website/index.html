@@ -46,25 +46,23 @@
                 </li>
 			</ul>
             <!-- Section displays venues inside selected itinerary -->
-            <ul class="itineraryVenues nav nav-pills darkorange marginBottom">
+            <ul ng-class="{itineraryVenuesEmpty: itineraryVenues.length==0}" class="itineraryVenues nav nav-pills darkorange marginBottom">
                 <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in itineraryVenues">
                     <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
                 </li>
             </ul>
 
             <!-- Search area, Left -->
-            <div class = "row span4">
-                <!-- Section to display search results for venues -->
-                <div class="search_results row col-md-3">
-                    <input type="text" ng-model="searchArea" 
-                    typeahead="venue.name for venue in searchFoursquare($viewValue)"
-                    placeholder = "Search near this area..."></input>
-                    <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
-                    <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
-                        <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
-                        <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
-                        <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
-                    </div>
+            <!-- Section to display search results for venues -->
+            <div class="search_results row span4">
+                <input type="text" ng-model="searchArea" 
+                typeahead="venue.name for venue in searchFoursquare($viewValue)"
+                placeholder = "Search near this area..."></input>
+                <i class = "icon-search" ng-click="searchFoursquare(searchArea)"></i>
+                <div class = "well well-sm searchResults" ng-repeat="venue in searchVenues" ng-click="showVenueInfo('search', $index)">
+                    <p>{{venue.name}} <i class = "icon-plus" ng-click="addVenueToCurrentItinerary($index)"></i></p>
+                    <p>{{venue.location.address}}, {{venue.location.city}}, {{venue.location.state}} {{venue.location.postalCode}}</p> 
+                    <p><a href="{{venue.url}}" target="_blank">{{venue.url}}</a></p>
                 </div>
             </div>
 
