@@ -47,7 +47,7 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.addItinerary = function(){
-		bootbox.prompt("Please enter itinerary name",function(response){
+		bootbox.prompt("Please enter a name for your new itinerary:",function(response){
 			if(response){
 				$scope.itineraries = store.get( "whatever" );
 				$scope.itineraries.push( {name:response, venues:[]} );
