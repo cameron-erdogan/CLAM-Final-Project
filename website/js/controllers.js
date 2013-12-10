@@ -30,8 +30,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 	};
 
 	$scope.markerClicked = function(marker) {
-		$scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
-		                         markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
+		// $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
+		//                          markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
 		$scope.currentMarker = marker;
 		$scope.currentVenue = $scope.findVenueFromMarker(marker);
 		console.log(marker);
