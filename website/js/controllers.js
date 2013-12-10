@@ -119,11 +119,12 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   $scope.removeVenueFromItinerary = function(index){
     bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
-      $scope.removeMarker("itinerary", index);
-      $scope.currentItinerary.venues.splice(index, 1);
-      $scope.addSearchResultsToMap($scope.searchVenues)
-      $scope.showItinerary($scope.currentItinerary);
-      //
+      if(response){
+        $scope.removeMarker("itinerary", index);
+        $scope.currentItinerary.venues.splice(index, 1);
+        $scope.addSearchResultsToMap($scope.searchVenues)
+        $scope.showItinerary($scope.currentItinerary);
+      }
       store.set( "whatever",$scope.itineraries );      
     });
 
