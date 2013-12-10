@@ -46,9 +46,12 @@
                 </li>
 			</ul>
             <!-- Section displays venues inside selected itinerary -->
-            <ul ng-class="{itineraryVenuesEmpty: itineraryVenues.length==0}" class="itineraryVenues nav nav-pills darkorange marginBottom">
+            <ul class="itineraryVenues nav nav-pills darkorange marginBottom">
                 <li ng-class="{active: currentVenue.id == venue.id}" ng-click="showVenueInfo('itinerary', $index)" ng-repeat="venue in itineraryVenues">
                     <a href="#">{{venue.name}} <i ng-click = "removeVenueFromItinerary($index)" class="icon-remove"></i></a>
+                </li>
+                <li ng-show="currentItinerary.venues.length==0">
+                    There are no venues in this itinerary. Search for and add venues below!
                 </li>
             </ul>
 

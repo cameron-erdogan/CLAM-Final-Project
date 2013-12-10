@@ -43,19 +43,31 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
   };
 
   $scope.addItinerary = function(){
-    var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name");
-    if (newName){
-      var itin = {name:newName, venues:[]};
-      $scope.itineraries.push(itin);
-    }
+    var newName = bootbox.prompt("Please enter itinerary name",function(response){
+      if(response){
+        var itin = {name:response, venues:[]};
+        $scope.itineraries.push(itin);
+      }
+      $scope.$apply();
+    });
+/////////////////////////////////////////////////////////////disable "ok" when nothing is entered; disable "cancel" if there are no itineraries
     //
     store.set( "whatever",$scope.itineraries );
   };
 
   $scope.removeItinerary = function(index){
     bootbox.confirm("Are you sure you want to remove " + $scope.itineraries[index].name, function(response){
-      if(response)
+      if(response){
         $scope.itineraries.splice(index,1);
+        if( index==0 ){
+          $scope.showItinerary($scope.itineraries[0]);
+        }
+        else{
+          $scope.showItinerary($scope.itineraries[index-1]);
+        }
+      }
+      /////////////////////////////////////////////////////////////////if the selected one has index index 
+      $scope.$apply();
     });
     //
     store.set( "whatever",$scope.itineraries );
@@ -68,18 +80,19 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       //store.remove("whatever");
       $scope.itineraries = store.get( "whatever" );
     }
-    if( $scope.itineraries.length==0 ){
-      var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name"); /////////////////disable "cancel"
-      if(reply == null || jQuery.trim(reply).length == 0) {
-        
-      }
-      if (newName){
-        var itin = {name:newName, venues:[]};
-        $scope.itineraries.push(itin);
-      }
-      //
-      store.set( "whatever",$scope.itineraries );
-    }
+    $scope.showItinerary($scope.itineraries[0]);
+    // if( $scope.itineraries.length==0 ){
+    //   var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name"); /////////////////disable "cancel"
+    //   if(reply == null || jQuery.trim(reply).length == 0) {
+
+    //   }
+    //   if (newName){
+    //     var itin = {name:newName, venues:[]};
+    //     $scope.itineraries.push(itin);
+    //   }
+    //   //
+    //   store.set( "whatever",$scope.itineraries );
+    // }
   };
 
   $scope.findVenueFromMarker = function(marker){
