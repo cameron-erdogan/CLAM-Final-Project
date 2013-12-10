@@ -17,7 +17,7 @@
         <!-- JQuery -->
         <script type="text/javascript" src="js/vendor/jquery-1.10.1.min.js"></script>
         <!-- Google Maps -->
-        <script type='text/javascript' src="js/vendor/maps.js"></script>
+        <!--<script type='text/javascript' src="js/vendor/maps.js"></script>-->
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=false"></script>
         <script type='text/javascript' src="js/vendor/bootbox.min.js"></script>
         <!-- Bootstrap -->
@@ -94,8 +94,14 @@
                     <p ng-show="currentVenue.hereNow.count > -1">Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
                 </div>
                 <div class = "infoWindowControls">
-                <button class = "btn btn-primary" ng-show="currentMarker.markerType == 'search'">Add to itinerary</button>
-                <button class = "btn btn-danger" ng-show="currentMarker.markerType == 'itinerary'">Remove from itinerary</button>
+                <button class = "btn btn-primary" ng-show="currentMarker.markerType == 'search'"
+                        ng-click = "addVenueToCurrentItinerary(currentMarker.venueIndex)">
+                    Add to itinerary
+                </button>
+                <button class = "btn btn-danger" ng-show="currentMarker.markerType == 'itinerary'"
+                        ng-click = "removeVenueFromItinerary(currentMarker.venueIndex)">
+                    Remove from itinerary
+                </button>
                 </div>
             </div>
         </div>

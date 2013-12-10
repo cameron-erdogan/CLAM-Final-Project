@@ -20,16 +20,18 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   //Markers should be added after map is loaded
   $scope.onMapIdle = function() {
-      if($scope.itineraries == null)
+      if($scope.itineraries == null){
         $scope.initializeItineraries();
+        $scope.currentMarker = null;
+      }
   };
 
-  //TODO:Differentiate case when current marker is already added or not
   $scope.markerClicked = function(marker) {
-      $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
-                              markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
+      // $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
+      //                         markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
+      $scope.currentMarker = marker;
       $scope.currentVenue = $scope.findVenueFromMarker(marker);
-      console.log($scope.currentVenue);
+      console.log(marker);
       $scope.myInfoWindow.open($scope.myMap, marker);  
   };
 
@@ -47,12 +49,12 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       if(response){
         var itin = {name:response, venues:[]};
         $scope.itineraries.push(itin);
+        store.set( "whatever",$scope.itineraries );
+        $scope.$apply();
       }
-      $scope.$apply();
     });
 /////////////////////////////////////////////////////////////disable "ok" when nothing is entered; disable "cancel" if there are no itineraries
     //
-    store.set( "whatever",$scope.itineraries );
   };
 
   $scope.removeItinerary = function(index){
@@ -80,19 +82,6 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
       //store.remove("whatever");
       $scope.itineraries = store.get( "whatever" );
     }
-    $scope.showItinerary($scope.itineraries[0]);
-    // if( $scope.itineraries.length==0 ){
-    //   var newName = window.prompt("ADD NEW ITINERARY: Please enter itinerary name"); /////////////////disable "cancel"
-    //   if(reply == null || jQuery.trim(reply).length == 0) {
-
-    //   }
-    //   if (newName){
-    //     var itin = {name:newName, venues:[]};
-    //     $scope.itineraries.push(itin);
-    //   }
-    //   //
-    //   store.set( "whatever",$scope.itineraries );
-    // }
   };
 
   $scope.findVenueFromMarker = function(marker){
@@ -107,25 +96,31 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
     }
   };
 
+  //Hacky shit due to ui-maps bug. Look at https://github.com/angular-ui/ui-map/issues/23
+  $scope.prevIndex = -1;
   $scope.addVenueToCurrentItinerary = function(index){
-    $scope.removeMarker("search",index);
-    $scope.currentItinerary.venues.push($scope.searchVenues[index]);
-    $scope.searchVenues.splice(index, 1);
-    $scope.addSearchResultsToMap($scope.searchVenues);
-    $scope.showItinerary($scope.currentItinerary);
-    //
-    store.set( "whatever",$scope.itineraries );
+    if ($scope.prevIndex != index){
+      $scope.currentItinerary.venues.push($scope.searchVenues[index]);
+      $scope.removeMarker("search",index);
+      $scope.searchVenues.splice(index, 1);
+      $scope.addSearchResultsToMap($scope.searchVenues);
+      $scope.showItinerary($scope.currentItinerary);
+      //
+      store.set( "whatever",$scope.itineraries );
+  }
+  $scope.prevIndex = index;
+
   }
 
   $scope.removeVenueFromItinerary = function(index){
-    bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
+    return bootbox.confirm( "Are you sure you want to remove the venue "+$scope.currentItinerary.venues[index].name+"from the itinerary "+$scope.currentItinerary.name+"?", function(response){
       if(response){
         $scope.removeMarker("itinerary", index);
         $scope.currentItinerary.venues.splice(index, 1);
         $scope.addSearchResultsToMap($scope.searchVenues)
         $scope.showItinerary($scope.currentItinerary);
-      }
-      store.set( "whatever",$scope.itineraries );      
+        store.set( "whatever",$scope.itineraries );     
+      } 
     });
 
     //////////////////////////////////////////////////
