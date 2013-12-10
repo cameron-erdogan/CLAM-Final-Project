@@ -26,7 +26,8 @@ app.controller('MyCtrl', function($scope, FoursquareService) {
 
   //TODO:Differentiate case when current marker is already added or not
   $scope.markerClicked = function(marker) {
-      $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng()};
+      $scope.currentMarker = {lat:marker.getPosition().lat(),lng:marker.getPosition().lng(),
+                              markerType:marker.get('markerType'), venueIndex:marker.get('venueIndex')};
       $scope.currentVenue = $scope.findVenueFromMarker(marker);
       console.log($scope.currentVenue);
       $scope.myInfoWindow.open($scope.myMap, marker);  

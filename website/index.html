@@ -81,18 +81,21 @@
                 </div>
             </div>
             <div ui-map-info-window="myInfoWindow">
-                <h1>{{currentVenue.name}}</h1>
-                <p>
-                    {{currentVenue.categories[0].name}}
-                </p>
-                <p>
-                    {{currentVenue.location.address}} ({{currentVenue.location.crossStreet}}),
-                    <br/>{{currentVenue.location.city}}, {{currentVenue.location.state}} {{currentVenue.location.postalCode}}, {{currentVenue.location.country}}
-                    <br/>{{currentVenue.contact.formattedPhone}}
-                    <br/><a href="{{currentVenue.url}}" target="_blank">{{currentVenue.url}}</i></a>
-                    <br/><a href="http://twitter.com/{{currentVenue.twitter}}" target="_blank">@{{currentVenue.twitter}}</i></a>
-                    <br/>Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total.
-                </p>
+                <h2>{{currentVenue.name}}</h2>
+                <h5 ng-show = "currentVenue.categories[0].name">{{currentVenue.categories[0].name}}</h5>
+                <div class = "infoWindowInfo">
+                    <p ng-show="currentVenue.location.address">{{currentVenue.location.address}}</p>
+                    <p ng-show="currentVenue.location.crossStreet">({{currentVenue.location.crossStreet}})</p>
+                    <p ng-show="currentVenue.location.city">{{currentVenue.location.city}}, {{currentVenue.location.state}} {{currentVenue.location.postalCode}}, {{currentVenue.location.country}}</p>
+                    <p ng-show="currentVenue.contact.formattedPhone">{{currentVenue.contact.formattedPhone}}<p>
+                    <p ng-show="currentVenue.url"><a href="{{currentVenue.url}}" target="_blank">{{currentVenue.url}}</a></p>
+                    <p ng-show="currentVenue.twitter"><a ng-show="currentVenue.twitter" href="http://twitter.com/{{currentVenue.twitter}}" target="_blank">@{{currentVenue.twitter}}</a></p>
+                    <p ng-show="currentVenue.hereNow.count > -1">Currently {{currentVenue.hereNow.count}} checked in out of {{currentVenue.stats.checkinsCount}} total. </p>
+                </div>
+                <div class = "infoWindowControls">
+                <button class = "btn btn-primary" ng-show="currentMarker.markerType == 'search'">Add to itinerary</button>
+                <button class = "btn btn-danger" ng-show="currentMarker.markerType == 'itinerary'">Remove from itinerary</button>
+                </div>
             </div>
         </div>
     </body>

@@ -37,16 +37,13 @@
 	margin-bottom :1px !important;
 }
 
-#add-itinerary {
-	left: 4px;
-	top: 8px;
-	width: 130px;
-	position: relative;
-}
-
 .darkorange .active a,
 .darkorange .active a:hover {
     background-color: darkorange;
+}
+
+.darkorange a:hover {
+    color: darkorange;
 }
 
 .searchResults{
@@ -57,4 +54,8 @@
 	font-size: 14px;
 	line-height:80%;
 	cursor: pointer;
+}
+
+.infoWindowControls{
+	padding-bottom:10px;
 }
