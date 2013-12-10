@@ -44,9 +44,25 @@
 	position: relative;
 }
 
+.darkgray a{
+    background-color: rgba(112,112,112,.9);
+    color:white;
+}
+.darkgray a:hover{
+    color:white;
+}
+.lightgray a{
+    background-color: rgba(255,255,255,.9);
+}
+
+.darkorange a{
+    background-color: rgba(0,174,239,.9);
+    color:white;
+}
 .darkorange .active a,
 .darkorange .active a:hover {
-    background-color: darkorange;
+    background-color: rgba(255,140,0,.9);
+    color:white;
 }
 
 .searchResults{
